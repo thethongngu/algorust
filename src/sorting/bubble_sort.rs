@@ -23,28 +23,28 @@ mod tests {
     use crate::sorting::*;
 
     #[test]
-    fn test_normal() {
+    fn normal() {
         let mut arr = vec![3, 7, 11, -4, 6, 1, 1];
         bubble_sort(&mut arr);
         assert!(is_increasing(&arr));
     }
 
     #[test]
-    fn test_increasing() {
+    fn increasing() {
         let mut arr = vec![-3, 7, 9, 10, 20, 88];
         bubble_sort(&mut arr);
         assert!(is_increasing(&arr));
     }
 
     #[test]
-    fn test_empty() {
+    fn empty() {
         let mut arr = Vec::<i32>::new();
         bubble_sort(&mut arr);
         assert!(is_increasing(&arr));
     }
 
     #[test]
-    fn test_one_element() {
+    fn one_element_only() {
         let mut arr = vec![-4];
         bubble_sort(&mut arr);
         assert!(is_increasing(&arr));
