@@ -1,5 +1,6 @@
 mod bubble_sort;
 mod insertion_sort;
+mod quick_sort;
 mod selection_sort;
 
 pub trait Sorter<T> {
@@ -31,7 +32,7 @@ where
 mod tests {
     use super::{
         bubble_sort::BubbleSort, insertion_sort::InsertionSort, is_increasing,
-        selection_sort::SelectionSort, Sorter,
+        quick_sort::QuickSort, selection_sort::SelectionSort, Sorter,
     };
 
     struct SortAlgo<T> {
@@ -40,11 +41,13 @@ mod tests {
 
     impl<T> SortAlgo<T> {
         fn new() -> Self {
-            let bubble = BubbleSort;
-            let insertion = InsertionSort;
-            let selection = SelectionSort;
             SortAlgo {
-                algos: vec![Box::new(bubble), Box::new(insertion), Box::new(selection)],
+                algos: vec![
+                    Box::new(BubbleSort),
+                    Box::new(InsertionSort),
+                    Box::new(SelectionSort),
+                    Box::new(QuickSort),
+                ],
             }
         }
     }
@@ -65,7 +68,8 @@ mod tests {
         for algo in sorts.algos {
             let mut arr = vec![3, 7, 11, -4, 6, 1, 1];
             algo.sort(&mut arr);
-            assert!(is_increasing(&arr), "{} error", algo.name());
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
 
@@ -75,7 +79,8 @@ mod tests {
         for algo in sorts.algos {
             let mut arr = vec![-3, 7, 9, 10, 20, 88];
             algo.sort(&mut arr);
-            assert!(is_increasing(&arr), "{} error", algo.name());
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
 
@@ -85,7 +90,8 @@ mod tests {
         for algo in sorts.algos {
             let mut arr = vec![88, 20, 10, 9, 7, -3];
             algo.sort(&mut arr);
-            assert!(is_increasing(&arr), "{} error", algo.name());
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
 
@@ -95,7 +101,8 @@ mod tests {
         for algo in sorts.algos {
             let mut arr = Vec::<i32>::new();
             algo.sort(&mut arr);
-            assert!(is_increasing(&arr), "{} error", algo.name());
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
 
@@ -105,7 +112,8 @@ mod tests {
         for algo in sorts.algos {
             let mut arr = vec![4];
             algo.sort(&mut arr);
-            assert!(is_increasing(&arr), "{} error", algo.name());
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
 
@@ -115,7 +123,8 @@ mod tests {
         for algo in sorts.algos {
             let mut arr = vec![4, -10];
             algo.sort(&mut arr);
-            assert!(is_increasing(&arr), "{} error", algo.name());
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
 }
