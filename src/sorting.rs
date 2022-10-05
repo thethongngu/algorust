@@ -108,4 +108,14 @@ mod tests {
             assert!(is_increasing(&arr), "{} error", algo.name());
         }
     }
+
+    #[test]
+    fn two_element_only() {
+        let sorts = SortAlgo::new();
+        for algo in sorts.algos {
+            let mut arr = vec![4, -10];
+            algo.sort(&mut arr);
+            assert!(is_increasing(&arr), "{} error", algo.name());
+        }
+    }
 }
