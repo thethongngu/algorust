@@ -7,3 +7,13 @@ Algorithms and data structures implement in Rust
 - [x] Bubble sort
 - [x] Selection sort
 - [x] Insertion sort
+- [x] Quick sort
+- [ ] Merge sort
+- [ ] Heap sort
+
+### Graph
+- [ ] DFS
+- [ ] BFS
+- [ ] Dijkstra
+- [ ] Ford-Bellman
+- [ ] Toposort
