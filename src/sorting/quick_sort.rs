@@ -4,9 +4,11 @@ pub struct QuickSort;
 
 impl QuickSort {
     fn partition<T: Sized + Ord>(slice: &mut [T], left: usize, right: usize) -> usize {
+        // Choose random index and swap it with left-most item
         let pivot_index = rand::random::<usize>() % (right - left + 1) + left;
         slice.swap(pivot_index, left);
 
+        // partition range from [left + 1..right] into 2 partitions (`start_half` indicates start of second half)
         let mut start_half = left + 1;
         for i in (left + 1)..=right {
             if slice[left] > slice[i] {
@@ -15,6 +17,7 @@ impl QuickSort {
             }
         }
 
+        // swap pivot back to separation index of 2 halves, return pivot index
         slice.swap(left, start_half - 1);
         start_half - 1
     }
@@ -24,6 +27,8 @@ impl QuickSort {
             return;
         }
         let pivot_index = QuickSort::partition(slice, left, right);
+
+        // usize not allow negative value when compute `pivot_index - 1`
         if pivot_index > 0 {
             QuickSort::qsort(slice, left, pivot_index - 1)
         };
