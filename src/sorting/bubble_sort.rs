@@ -1,52 +1,31 @@
-pub fn bubble_sort<T: Ord>(arr: &mut [T]) {
-    if arr.len() <= 1 {
-        return;
-    }
+use super::Sorter;
 
-    for i in 0..arr.len() {
-        let mut sorted = true;
-        for j in 0..(arr.len() - i - 1) {
-            if arr[j] > arr[j + 1] {
-                arr.swap(j, j + 1);
-                sorted = false;
+pub struct BubbleSort;
+
+impl<T> Sorter<T> for BubbleSort {
+    fn sort(&self, slice: &mut [T])
+    where
+        T: Ord,
+    {
+        if slice.len() <= 1 {
+            return;
+        }
+
+        for i in 0..slice.len() {
+            let mut sorted = true;
+            for j in 0..(slice.len() - i - 1) {
+                if slice[j] > slice[j + 1] {
+                    slice.swap(j, j + 1);
+                    sorted = false;
+                }
+            }
+            if sorted {
+                break;
             }
         }
-        if sorted {
-            break;
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::sorting::bubble_sort::*;
-    use crate::sorting::*;
-
-    #[test]
-    fn normal() {
-        let mut arr = vec![3, 7, 11, -4, 6, 1, 1];
-        bubble_sort(&mut arr);
-        assert!(is_increasing(&arr));
     }
 
-    #[test]
-    fn increasing() {
-        let mut arr = vec![-3, 7, 9, 10, 20, 88];
-        bubble_sort(&mut arr);
-        assert!(is_increasing(&arr));
-    }
-
-    #[test]
-    fn empty() {
-        let mut arr = Vec::<i32>::new();
-        bubble_sort(&mut arr);
-        assert!(is_increasing(&arr));
-    }
-
-    #[test]
-    fn one_element_only() {
-        let mut arr = vec![-4];
-        bubble_sort(&mut arr);
-        assert!(is_increasing(&arr));
+    fn name(&self) -> &'static str {
+        "Bubble Sort"
     }
 }
