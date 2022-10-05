@@ -127,4 +127,22 @@ mod tests {
             assert!(is_increasing(&arr), "Incorrect: {}", algo.name());
         }
     }
+
+    #[test]
+    fn slice_of_vec() {
+        let sorts = SortAlgo::new();
+        for algo in sorts.algos {
+            let mut arr = vec![4, 9, 0, 0, -2, -4, 5, 7, 9, 5, 2];
+            algo.sort(&mut arr[2..10]);
+
+            println!("{}: {:?}", algo.name(), arr);
+            assert!(is_increasing(&arr[2..10]), "Incorrect: {}", algo.name());
+            assert_eq!(
+                arr[2..10],
+                vec![-4, -2, 0, 0, 5, 5, 7, 9],
+                "Incorrect: {}",
+                algo.name()
+            );
+        }
+    }
 }
