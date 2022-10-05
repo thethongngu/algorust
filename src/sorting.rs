@@ -12,7 +12,7 @@ pub trait Sorter<T> {
 
 pub fn is_increasing<T>(arr: &[T]) -> bool
 where
-    T: PartialOrd,
+    T: Ord,
 {
     if arr.len() <= 1 {
         return true;

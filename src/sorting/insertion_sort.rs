@@ -5,7 +5,7 @@ pub struct InsertionSort;
 impl<T> Sorter<T> for InsertionSort {
     fn sort(&self, slice: &mut [T])
     where
-        T: PartialOrd,
+        T: Ord,
     {
         for i in 1..slice.len() {
             let mut j = i;
