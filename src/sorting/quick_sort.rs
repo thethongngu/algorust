@@ -1,6 +1,6 @@
 fn partition<T>(slice: &mut [T], left: usize, right: usize) -> usize
 where
-    T: Sized + Ord,
+    T: Ord,
 {
     // Choose random index and swap it with left-most item
     let pivot_index = rand::random::<usize>() % (right - left + 1) + left;
@@ -22,7 +22,7 @@ where
 
 fn qsort<T>(slice: &mut [T], left: usize, right: usize)
 where
-    T: Sized + Ord,
+    T: Ord,
 {
     if left >= right {
         return;
