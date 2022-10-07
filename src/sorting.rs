@@ -109,6 +109,15 @@ mod tests {
         assert_eq!(arr[2..10], vec![-4, -2, 0, 0, 5, 5, 7, 9]);
     }
 
+    fn string_type_case<F>(f: F)
+    where
+        F: FnOnce(&mut [&'static str]),
+    {
+        let mut arr = vec!["eond", "ase", "wowo", "", "taiwan"];
+        f(&mut arr);
+        assert!(is_increasing(&arr));
+    }
+
     #[test]
     fn test_normal() {
         normal_case(bubble_sort);
@@ -184,5 +193,16 @@ mod tests {
         slice_case(quick_sort);
         slice_case(merge_sort);
         slice_case(heap_sort);
+    }
+
+    #[test]
+    fn test_string_type() {
+        string_type_case(bubble_sort);
+        string_type_case(insertion_sort);
+        string_type_case(selection_sort);
+        string_type_case(insertion_sort);
+        string_type_case(quick_sort);
+        string_type_case(merge_sort);
+        string_type_case(heap_sort);
     }
 }
