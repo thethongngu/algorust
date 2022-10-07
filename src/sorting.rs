@@ -154,6 +154,58 @@ where
     merge_sort_helper(slice, 0, slice.len() - 1);
 }
 
+fn move_down<T>(slice: &mut [T], mut pos: usize)
+where
+    T: Ord,
+{
+    loop {
+        let left_child = pos * 2 + 1;
+        let right_child = left_child + 1;
+
+        if left_child >= slice.len() {
+            return;
+        }
+
+        if right_child >= slice.len() {
+            if slice[pos] < slice[left_child] {
+                slice.swap(pos, left_child);
+            }
+            pos = left_child;
+        } else {
+            let max = if slice[left_child] > slice[right_child] {
+                left_child
+            } else {
+                right_child
+            };
+            if slice[pos] < slice[max] {
+                slice.swap(pos, max);
+            }
+            pos = max;
+        }
+    }
+}
+
+fn heapify<T>(slice: &mut [T])
+where
+    T: Ord,
+{
+    for node in (0..slice.len() / 2).rev() {
+        move_down(slice, node);
+    }
+}
+
+pub fn heap_sort<T>(slice: &mut [T])
+where
+    T: Ord,
+{
+    heapify(slice);
+
+    for last in (0..slice.len()).rev() {
+        slice.swap(0, last);
+        move_down(&mut slice[0..last], 0);
+    }
+}
+
 pub fn is_increasing<T>(arr: &[T]) -> bool
 where
     T: Ord,
@@ -174,7 +226,8 @@ where
 #[cfg(test)]
 mod tests {
     use super::{
-        bubble_sort, insertion_sort, is_increasing, merge_sort, quick_sort, selection_sort,
+        bubble_sort, heap_sort, insertion_sort, is_increasing, merge_sort, quick_sort,
+        selection_sort,
     };
 
     #[test]
@@ -258,6 +311,7 @@ mod tests {
         normal_case(insertion_sort);
         normal_case(quick_sort);
         normal_case(merge_sort);
+        normal_case(heap_sort);
     }
 
     #[test]
@@ -268,6 +322,7 @@ mod tests {
         increasing_case(insertion_sort);
         increasing_case(quick_sort);
         increasing_case(merge_sort);
+        increasing_case(heap_sort);
     }
 
     #[test]
@@ -278,6 +333,7 @@ mod tests {
         decreasing_case(insertion_sort);
         decreasing_case(quick_sort);
         decreasing_case(merge_sort);
+        decreasing_case(heap_sort);
     }
 
     #[test]
@@ -288,6 +344,7 @@ mod tests {
         empty_case(insertion_sort);
         empty_case(quick_sort);
         empty_case(merge_sort);
+        empty_case(heap_sort);
     }
 
     #[test]
@@ -298,6 +355,7 @@ mod tests {
         one_element_only_case(insertion_sort);
         one_element_only_case(quick_sort);
         one_element_only_case(merge_sort);
+        one_element_only_case(heap_sort);
     }
 
     #[test]
@@ -308,6 +366,7 @@ mod tests {
         two_element_only_case(insertion_sort);
         two_element_only_case(quick_sort);
         two_element_only_case(merge_sort);
+        two_element_only_case(heap_sort);
     }
 
     #[test]
@@ -318,5 +377,6 @@ mod tests {
         slice_case(insertion_sort);
         slice_case(quick_sort);
         slice_case(merge_sort);
+        slice_case(heap_sort);
     }
 }

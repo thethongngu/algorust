@@ -8,8 +8,8 @@ Algorithms and data structures implement in Rust
 - [x] Selection sort
 - [x] Insertion sort
 - [x] Quick sort
-- [ ] Merge sort
-- [ ] Heap sort
+- [x] Merge sort
+- [x] Heap sort
 
 ### Graph
 - [ ] DFS
