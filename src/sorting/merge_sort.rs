@@ -19,6 +19,7 @@ where
 
     while left_id <= mid && right_id <= right {
         if slice[left_id] < slice[right_id] {
+            // TODO: sort by index to prevent cloning large object
             tmp.push(slice[left_id].clone());
             left_id += 1;
         } else {
