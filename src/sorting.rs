@@ -1,210 +1,16 @@
-pub fn bubble_sort<T>(slice: &mut [T])
-where
-    T: Ord,
-{
-    if slice.len() <= 1 {
-        return;
-    }
+mod bubble_sort;
+mod heap_sort;
+mod insertion_sort;
+mod merge_sort;
+mod quick_sort;
+mod selection_sort;
 
-    for i in 0..slice.len() {
-        let mut sorted = true;
-        for j in 0..(slice.len() - i - 1) {
-            if slice[j] > slice[j + 1] {
-                slice.swap(j, j + 1);
-                sorted = false;
-            }
-        }
-        if sorted {
-            break;
-        }
-    }
-}
-
-pub fn insertion_sort<T>(slice: &mut [T])
-where
-    T: Ord,
-{
-    for i in 1..slice.len() {
-        let mut j = i;
-        while j > 0 && slice[j - 1] > slice[i] {
-            j -= 1;
-        }
-
-        for k in j..i {
-            slice.swap(k, i);
-        }
-    }
-}
-
-pub fn selection_sort<T>(slice: &mut [T])
-where
-    T: Ord,
-{
-    for i in 0..slice.len() {
-        let mut max_pos = i;
-        for j in (i + 1)..slice.len() {
-            if slice[j] < slice[max_pos] {
-                max_pos = j;
-            }
-        }
-        slice.swap(i, max_pos);
-    }
-}
-
-fn partition<T>(slice: &mut [T], left: usize, right: usize) -> usize
-where
-    T: Sized + Ord,
-{
-    // Choose random index and swap it with left-most item
-    let pivot_index = rand::random::<usize>() % (right - left + 1) + left;
-    slice.swap(pivot_index, left);
-
-    // partition range from [left + 1..right] into 2 partitions (`start_half` indicates start of second half)
-    let mut start_half = left + 1;
-    for i in (left + 1)..=right {
-        if slice[left] > slice[i] {
-            slice.swap(start_half, i);
-            start_half += 1;
-        }
-    }
-
-    // swap pivot back to separation index of 2 halves, return pivot index
-    slice.swap(left, start_half - 1);
-    start_half - 1
-}
-
-fn qsort<T>(slice: &mut [T], left: usize, right: usize)
-where
-    T: Sized + Ord,
-{
-    if left >= right {
-        return;
-    }
-    let pivot_index = partition(slice, left, right);
-
-    // usize not allow negative value when compute `pivot_index - 1`
-    if pivot_index > 0 {
-        qsort(slice, left, pivot_index - 1)
-    };
-    qsort(slice, pivot_index + 1, right);
-}
-
-pub fn quick_sort<T>(slice: &mut [T])
-where
-    T: Ord,
-{
-    // usize not allow negative calculation (panic if remove this)
-    if slice.len() <= 1 {
-        return;
-    }
-    qsort(slice, 0, slice.len() - 1);
-}
-
-fn merge_sort_helper<T>(slice: &mut [T], left: usize, right: usize)
-where
-    T: Ord + Clone,
-{
-    if left >= right {
-        return;
-    }
-
-    // sort 2 smaller partitions
-    let mid = left + (right - left) / 2;
-    merge_sort_helper(slice, left, mid);
-    merge_sort_helper(slice, mid + 1, right);
-
-    // combine 2 sorted partitions to temporarilt vector
-    let mut tmp: Vec<T> = Vec::new();
-    tmp.reserve(right - left + 1);
-    let mut left_id = left;
-    let mut right_id = mid + 1;
-
-    while left_id <= mid && right_id <= right {
-        if slice[left_id] < slice[right_id] {
-            tmp.push(slice[left_id].clone());
-            left_id += 1;
-        } else {
-            tmp.push(slice[right_id].clone());
-            right_id += 1;
-        }
-    }
-    while left_id <= mid {
-        tmp.push(slice[left_id].clone());
-        left_id += 1;
-    }
-    while right_id <= right {
-        tmp.push(slice[right_id].clone());
-        right_id += 1;
-    }
-
-    // move to original slice
-    for index in (left..=right).rev() {
-        slice[index] = tmp.pop().unwrap();
-    }
-}
-
-pub fn merge_sort<T>(slice: &mut [T])
-where
-    T: Ord + Clone,
-{
-    // usize not allow negative calculation (panic if remove this)
-    if slice.len() <= 1 {
-        return;
-    }
-    merge_sort_helper(slice, 0, slice.len() - 1);
-}
-
-fn move_down<T>(slice: &mut [T], mut pos: usize)
-where
-    T: Ord,
-{
-    loop {
-        let left_child = pos * 2 + 1;
-        let right_child = left_child + 1;
-
-        if left_child >= slice.len() {
-            return;
-        }
-
-        if right_child >= slice.len() {
-            if slice[pos] < slice[left_child] {
-                slice.swap(pos, left_child);
-            }
-            pos = left_child;
-        } else {
-            let max = if slice[left_child] > slice[right_child] {
-                left_child
-            } else {
-                right_child
-            };
-            if slice[pos] < slice[max] {
-                slice.swap(pos, max);
-            }
-            pos = max;
-        }
-    }
-}
-
-fn heapify<T>(slice: &mut [T])
-where
-    T: Ord,
-{
-    for node in (0..slice.len() / 2).rev() {
-        move_down(slice, node);
-    }
-}
-
-pub fn heap_sort<T>(slice: &mut [T])
-where
-    T: Ord,
-{
-    heapify(slice);
-
-    for last in (0..slice.len()).rev() {
-        slice.swap(0, last);
-        move_down(&mut slice[0..last], 0);
-    }
-}
+pub use self::bubble_sort::bubble_sort;
+pub use self::heap_sort::heap_sort;
+pub use self::insertion_sort::insertion_sort;
+pub use self::merge_sort::merge_sort;
+pub use self::quick_sort::quick_sort;
+pub use self::selection_sort::selection_sort;
 
 pub fn is_increasing<T>(arr: &[T]) -> bool
 where
@@ -226,8 +32,8 @@ where
 #[cfg(test)]
 mod tests {
     use super::{
-        bubble_sort, heap_sort, insertion_sort, is_increasing, merge_sort, quick_sort,
-        selection_sort,
+        bubble_sort::bubble_sort, heap_sort::heap_sort, insertion_sort, is_increasing, merge_sort,
+        quick_sort, selection_sort,
     };
 
     #[test]
