@@ -28,6 +28,12 @@ impl<T> Queue<T> {
     }
 }
 
+impl<T> Default for Queue<T> {
+    fn default() -> Self {
+        Queue::new()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::data_structures::queue::Queue;

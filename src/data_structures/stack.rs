@@ -24,6 +24,12 @@ impl<T> Stack<T> {
     }
 }
 
+impl<T> Default for Stack<T> {
+    fn default() -> Self {
+        Stack::new()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use crate::data_structures::stack::Stack;
