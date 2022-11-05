@@ -1,6 +1,6 @@
 # algorust
 
-Algorithms and data structures implement in Rust
+Algorithms and data structures implement in Rust.
 
 ## Done
 ### Sorting
@@ -11,9 +11,14 @@ Algorithms and data structures implement in Rust
 - [x] Merge sort
 - [x] Heap sort
 
+### Data structures
+- [x] Queue
+- [x] Stack
+- [ ] Deque
+
 ### Graph
-- [ ] DFS
-- [ ] BFS
+- [x] DFS
+- [x] BFS
 - [ ] Dijkstra
 - [ ] Ford-Bellman
 - [ ] Toposort
