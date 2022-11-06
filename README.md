@@ -1,6 +1,7 @@
 # algorust
-
 Algorithms and data structures implement in Rust.
+
+The implementation is self-contained and isolated to make it easier to use.
 
 ## Done
 ### Sorting
@@ -21,4 +22,4 @@ Algorithms and data structures implement in Rust.
 - [x] BFS
 - [ ] Dijkstra
 - [ ] Ford-Bellman
-- [ ] Toposort
+- [x] Toposort
